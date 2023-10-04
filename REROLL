@@ -36,7 +36,7 @@ repeat task.wait() until game:IsLoaded()
         Flag = "Pers"
     })
     
-    Section2:AddToggle({
+    Section1:AddToggle({
         Name = "Spin (50 Gems)",
         Value = false,
         Flag = "SPIN",
@@ -61,7 +61,7 @@ repeat task.wait() until game:IsLoaded()
         end 
     })
     
-    Section2:AddToggle({
+    Section1:AddToggle({
         Name = "Fast Spin (80 Gems)",
         Value = false,
         Flag = "FSPIN",
@@ -87,7 +87,7 @@ repeat task.wait() until game:IsLoaded()
                 
     })
     
-    Section1:AddDropdown({
+    Section2:AddDropdown({
         Name = "Preferred Mythic Fruits",
         List = {"Nika", "Venom", "Ope", "Leopard", "Lightning", "Dough", "Dragon"},
         Multi = true,
@@ -98,7 +98,7 @@ repeat task.wait() until game:IsLoaded()
         end 
     })
     
-    Section1:AddDropdown({
+    Section2:AddDropdown({
         Name = "Preferred Legendary Fruits",
         List = {"Quake", "Gravity", "Phoenix", "TSRubber", "Magnet"},
         Multi = true,
