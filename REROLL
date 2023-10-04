@@ -93,7 +93,7 @@ repeat task.wait() until game:IsLoaded()
         Name = "Select Fruits..",
         List = {"Nika", "Venom", "Ope", "Leopard", "Lightning", "Dough", "Dragon"},
         Multi = true,
-        Flag = "SELECTEDFRUITS",
+        Flag = "SELECTEDFRUITS1",
         Callback = function(selected)
             FRUITS = selected
         end 
