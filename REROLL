@@ -64,9 +64,8 @@ repeat task.wait() until game:IsLoaded()
         Multi = true,
         Flag = "SELECTEDFRUITS",
         Callback = function(selected)
-            Persistence:SaveFile("SAVE")
             FRUITS = selected
         end 
     })
     
-    Persistence:LoadFile("SAVE")
+
