@@ -20,16 +20,11 @@ repeat task.wait() until game:IsLoaded()
     })
     
     local Section1 = main1:CreateSection({
-        Name = "Fruits Reroll"
+        Name = "Spin(50 Gems)"
     })
     
     local Section2 = main1:CreateSection({
-        Name = "USELESS STUFF"
-    })
-    
-    local Persistence = Section2:AddPersistence({
-        Name = "Settings",
-        Flag = "Pers"
+        Name = "Fast Spin(80 Gems)"
     })
     
     Section1:AddToggle({
@@ -57,6 +52,32 @@ repeat task.wait() until game:IsLoaded()
             end 
         end 
     })
+
+    Section2:AddToggle({
+        Name = "Spin",
+        Value = false,
+        Flag = "SPIN",
+        Callback = function(state)
+            SPIN = state 
+            Persistence:SaveFile("SAVE")
+            while SPIN and libclose() do 
+                task.spawn(function()
+                    local MAIN_DATA = Player:WaitForChild("MAIN_DATA")
+                    local Gems = MAIN_DATA:WaitForChild("Gems")
+                    local Slots = MAIN_DATA:WaitForChild("Slots")
+                    local Slot = MAIN_DATA:WaitForChild("Slot")
+                    if Slots[Slot.Value] and FRUITS and (not table.find(FRUITS, Slots[Slot.Value].Value)) then 
+                        if MAIN_DATA and Gems and Gems.Value >= 50 then 
+                            game:GetService("ReplicatedStorage").Replicator:InvokeServer("FruitsHandler", "Spin", {["Type"] = "Fast"})
+                        else
+                            game:GetService("ReplicatedStorage").Replicator:InvokeServer("Core", "UpdateSettings", {["\255"] = true, ["\255"] = true, ["\255"] = true, ["\255"] = true, ["\255"] = true})
+                        end 
+                    end 
+                end)
+                task.wait()
+            end 
+        end 
+    })
     
     Section1:AddDropdown({
         Name = "Select Fruits..",
@@ -67,5 +88,14 @@ repeat task.wait() until game:IsLoaded()
             FRUITS = selected
         end 
     })
-    
+
+    Section2:AddDropdown({
+        Name = "Select Fruits..",
+        List = {"Nika", "Venom", "Ope", "Leopard", "Lightning", "Dough", "Dragon"},
+        Multi = true,
+        Flag = "SELECTEDFRUITS",
+        Callback = function(selected)
+            FRUITS = selected
+        end 
+    })
 
