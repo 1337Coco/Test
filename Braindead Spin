@@ -1,17 +1,3 @@
-local codes = {""}
-
-for i,v in pairs(codes) do
-
-local string_1 = "Codes";
-local string_2 = "Redeem";
-local table_1 = {
-["Code"] = v
-};
-game:GetService("ReplicatedStorage").Replicator:InvokeServer(string_1, string_2, table_1);
-
-end
-
-
 local currfruit = game.Players.LocalPlayer["MAIN_DATA"].Slots["1"].Value
 local wantedfruits = {"Nika", "Venom", "Ope", "Leopard", "Lightning", "Dough", "Dragon", "Quake", "Gravity", "Phoenix", "TSRubber", "Magnet"}
 
