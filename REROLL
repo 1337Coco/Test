@@ -54,13 +54,13 @@ repeat task.wait() until game:IsLoaded()
     })
 
     Section2:AddToggle({
-        Name = "Spin",
+        Name = "FastSpin",
         Value = false,
-        Flag = "SPIN",
+        Flag = "FASTSPIN",
         Callback = function(state)
             SPIN = state 
             Persistence:SaveFile("SAVE")
-            while SPIN and libclose() do 
+            while FASTSPIN and libclose() do 
                 task.spawn(function()
                     local MAIN_DATA = Player:WaitForChild("MAIN_DATA")
                     local Gems = MAIN_DATA:WaitForChild("Gems")
