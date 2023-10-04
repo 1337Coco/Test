@@ -70,11 +70,3 @@ repeat task.wait() until game:IsLoaded()
     })
     
     Persistence:LoadFile("SAVE")
-
-    local queueteleport = (syn and syn.queue_on_teleport) or queue_on_teleport or (fluxus and fluxus.queue_on_teleport)
-    Player.OnTeleport:Connect(function(state)
-        print(state, queueteleport)
-        if state == Enum.TeleportState.InProgress and queueteleport then 
-            queueteleport("repeat task.wait() until game:IsLoaded() loadstring(game:HttpGet('https://raw.githubusercontent.com/1337Coco/Test/main/REROLL'))()")
-        end 
-    end)
