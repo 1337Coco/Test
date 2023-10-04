@@ -24,21 +24,24 @@ repeat task.wait() until game:IsLoaded()
     })
     
     local Section2 = main1:CreateSection({
-        Name = "USELESS STUFF"
+        Name = "Spin"
     })
     
-    local Persistence = Section2:AddPersistence({
+    local Section3 = main1:CreateSection({
+        Name = "Config"
+    })
+    
+    local Persistence = Section3:AddPersistence({
         Name = "Settings",
         Flag = "Pers"
     })
     
-    Section1:AddToggle({
-        Name = "Spin",
+    Section2:AddToggle({
+        Name = "Spin (50 Gems)",
         Value = false,
         Flag = "SPIN",
         Callback = function(state)
             SPIN = state 
-            Persistence:SaveFile("SAVE")
             while SPIN and libclose() do 
                 task.spawn(function()
                     local MAIN_DATA = Player:WaitForChild("MAIN_DATA")
@@ -58,13 +61,52 @@ repeat task.wait() until game:IsLoaded()
         end 
     })
     
+    Section2:AddToggle({
+        Name = "Fast Spin (80 Gems)",
+        Value = false,
+        Flag = "FSPIN",
+        Callback = function(state)
+            FSPIN = state 
+            while FSPIN and libclose() do 
+                task.spawn(function()
+                MAIN_DATA = Player:WaitForChild("MAIN_DATA")
+                Gems = MAIN_DATA:WaitForChild("Gems")
+                Slots = MAIN_DATA:WaitForChild("Slots")
+                Slot = MAIN_DATA:WaitForChild("Slot")
+                if Slots[Slot.Value] and FRUITS and (not table.find(FRUITS, Slots[Slot.Value].Value)) then 
+                        if MAIN_DATA and Gems and Gems.Value >= 80 then 
+                            game:GetService("ReplicatedStorage").Replicator:InvokeServer("FruitsHandler", "Spin", {["Type"] = "Fast"})
+                        else
+                            game:GetService("ReplicatedStorage").Replicator:InvokeServer("Core", "UpdateSettings", {["\255"] = true, ["\255"] = true, ["\255"] = true, ["\255"] = true, ["\255"] = true})
+                        end 
+                    end 
+                end)
+                task.wait()
+            end 
+        end 
+                
+    })
+    
     Section1:AddDropdown({
-        Name = "Select Fruits..",
+        Name = "Preferred Mythic Fruits",
         List = {"Nika", "Venom", "Ope", "Leopard", "Lightning", "Dough", "Dragon"},
         Multi = true,
         Flag = "SELECTEDFRUITS",
         Callback = function(selected)
+        	Persistence:SaveFile("SAVE")
             FRUITS = selected
         end 
     })
     
+    Section1:AddDropdown({
+        Name = "Preferred Legendary Fruits",
+        List = {"Quake", "Gravity", "Phoenix", "TSRubber", "Magnet"},
+        Multi = true,
+        Flag = "SELECTEDFRUITS",
+        Callback = function(selected)
+        	Persistence:SaveFile("SAVE")
+            FRUITS = selected
+        end 
+    })
+    
+    Persistence:LoadFile("SAVE")
