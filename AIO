@@ -1,3 +1,5 @@
-loadstring(game:HttpGet('https://raw.githubusercontent.com/1337Coco/Test/main/Braindead%20Spin'))()
-loadstring(game:HttpGet('https://https://raw.githubusercontent.com/1337Coco/Test/main/FPS%20LIMIT'))()
+wait(2)
 loadstring(game:HttpGet('https://raw.githubusercontent.com/1337Coco/Test/main/Redeem%20All%20Codes'))()
+loadstring(game:HttpGet('https://https://raw.githubusercontent.com/1337Coco/Test/main/FPS%20LIMIT'))()
+wait(3)
+loadstring(game:HttpGet('https://raw.githubusercontent.com/1337Coco/Test/main/Braindead%20Spin'))()
