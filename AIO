@@ -1,5 +1,25 @@
+wait(1)
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local WindowFocusReleasedFunction = function()
+	RunService:Set3dRenderingEnabled(false)
+	setfpscap(5)
+	return
+end
+
+local WindowFocusedFunction = function()
+	RunService:Set3dRenderingEnabled(true)
+	setfpscap(30)
+	return
+end
+
+local Initialize = function()
+	UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
+	UserInputService.WindowFocused:Connect(WindowFocusedFunction)
+	return
+end
+Initialize()
+
 wait(2)
-loadstring(game:HttpGet('https://raw.githubusercontent.com/1337Coco/Test/main/Redeem%20All%20Codes'))()
-loadstring(game:HttpGet('https://https://raw.githubusercontent.com/1337Coco/Test/main/FPS%20LIMIT'))()
-wait(3)
 loadstring(game:HttpGet('https://github.com/1337Coco/Test/blob/main/Braindead%20Spin%20Mythic'))()
