@@ -25,7 +25,7 @@ while shared.FruitBattlegrounds do
 			end
 		end
 	else
-		LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1317.05322, 696.182251, -985.855286, -0.608514786, 4.99603416e-08, -0.793542504, -1.55696291e-08, 1, 7.48979332e-08, 0.793542504, 5.79316612e-08, -0.608514786);
+		LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-304, 697, -1241);
 
 		for i,v in pairs(FruitMoves) do
 			if not LocalPlayer.Cooldowns:FindFirstChild(v) then
