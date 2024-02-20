@@ -48,7 +48,11 @@ local CurrentData = MainData:WaitForChild("Fruits"):WaitForChild(MainData:WaitFo
                 LocalPlayer.Character:BreakJoints()
 		wait(5)
 		Respawn()
-            end
+            	end
+		if PlayerGui:FindFirstChild('DeathScreen') then
+            UI.HUD.Visible       =  false
+            UI.Safezone.Visible  =  false
+        	end
 
 	end
 end
