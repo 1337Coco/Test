@@ -7,11 +7,7 @@ local Players = game:GetService("Players");
 local LocalPlayer = Players.LocalPlayer;
 local PlayerGui = LocalPlayer.PlayerGui;
 
-local MainData = LocalPlayer:WaitForChild("MAIN_DATA")
-local CurrentData = MainData:WaitForChild("Fruits"):WaitForChild(MainData:WaitForChild("Slots")[MainData:WaitForChild("Slot").Value].Value);
 
-
--- Respawn
 local function Respawn()
     require(ReplicatedStorage.Loader).ServerEvent('Core', 'LoadCharacter', {})
     require(ReplicatedStorage.Loader).ServerEvent('Main', 'LoadCharacter')
@@ -25,67 +21,9 @@ local function Respawn()
     end
 end
 
-local FruitMoves = {};
+local MainData = LocalPlayer:WaitForChild("MAIN_DATA")
+local CurrentData = MainData:WaitForChild("Fruits"):WaitForChild(MainData:WaitForChild("Slots")[MainData:WaitForChild("Slot").Value].Value);
 
-while shared.FruitBattlegrounds do
-	wait(0.25);
-
-
-
-
-	-- AutoFarm : Respawn : 1/3
-task.spawn(function()
-    while AutoFarm do task.wait()
-        -- Hide Gui On Death
-        if PlayerGui:FindFirstChild('DeathScreen') then
-            UI.HUD.Visible       =  false
-            UI.Safezone.Visible  =  false
-        end
-        -- Hide Gui On Spawn
-        if (LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()) and LocalPlayer.Character:WaitForChild('Humanoid',2) then
-            game:GetService('StarterGui'):SetCoreGuiEnabled('Backpack',false)
-            game:GetService('StarterGui'):SetCoreGuiEnabled('PlayerList',true)
-            game:GetService('StarterGui'):SetCoreGuiEnabled('Chat',true)
-            UI.MainMenu.Visible  =  false
-            UI.HUD.Visible       =  true
-        end
-        -- Fix Camera On Spawn
-        if (LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()) and LocalPlayer.Character:WaitForChild('Humanoid',2) then
-            Workspace.CurrentCamera.CameraSubject =  LocalPlayer.Character.Humanoid
-            Workspace.CurrentCamera.CameraType    =  Enum.CameraType.Custom
-        end
-    end
-end)
--- AutoFarm : Respawn : 2/3
-task.spawn(function()
-    while AutoFarm do task.wait()
-        if (LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()) then
-            if Percent(LocalPlayer.Character:WaitForChild('Stats',2):GetAttribute("Stamina"),GetStamina()) <= getgenv().Stamina then
-                LocalPlayer.Character:BreakJoints()
-            end
-        end
-    end
-end)
--- AutoFarm : Respawn : 3/3
-task.spawn(function()
-    while AutoFarm do task.wait()
-        if LocalPlayer.Character == nil and UI.HUD.Visible == false then
-            Respawn()
-        end
-    end
-end)
-
-
-	if PlayerGui:FindFirstChild("UI") and not PlayerGui.UI.HUD.Visible then return end;
-	if LocalPlayer.Character.Stats:GetAttribute("Stamina") <= 50 then return end;
-	
-	if #FruitMoves == 0 then
-		for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
-			if v.ClassName == "Tool" and CurrentData.Level.Value >= v:GetAttribute("Level") then
-				FruitMoves[#FruitMoves + 1] = string.gsub(v.Name, " ", "");
-			end
-		end
-	else
 		LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1317.05322, 696.182251, -985.855286, -0.608514786, 4.99603416e-08, -0.793542504, -1.55696291e-08, 1, 7.48979332e-08, 0.793542504, 5.79316612e-08, -0.608514786);
 
 		for i,v in pairs(FruitMoves) do
@@ -93,5 +31,12 @@ end)
 				ReplicatedStorage.Replicator:InvokeServer(CurrentData.Name, v, {});
 			end
 		end
+
+		if Percent(LocalPlayer.Character:WaitForChild('Stats',2):GetAttribute("Stamina"),GetStamina()) <= getgenv().Stamina then
+                LocalPlayer.Character:BreakJoints()
+		wait(5)
+		Respawn()
+            end
+
 	end
 end;
