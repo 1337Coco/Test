@@ -53,7 +53,10 @@ local CurrentData = MainData:WaitForChild("Fruits"):WaitForChild(MainData:WaitFo
             UI.HUD.Visible       =  false
             UI.Safezone.Visible  =  false
         	end
-
-	end
+		if humanoid.Health <= 10 then
+			local args = {
+			[1] = {
+			[1] = "Respawn"
+		end
 end
 end;
