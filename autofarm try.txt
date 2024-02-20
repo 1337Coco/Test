@@ -7,6 +7,18 @@ local Players = game:GetService("Players");
 local LocalPlayer = Players.LocalPlayer;
 local PlayerGui = LocalPlayer.PlayerGui;
 
+-- GetLevel
+local function GetLevel()
+    return tostring(Data.Fruits[GetFruit()].Level.Value)
+end
+-- GetStamina
+local function GetStamina()
+    return (tonumber(GetLevel()) * 4) + 200
+end
+-- Percent
+local function Percent(Part, Whole)
+    return (Part / Whole) * 100
+end
 
 local function Respawn()
     require(ReplicatedStorage.Loader).ServerEvent('Core', 'LoadCharacter', {})
