@@ -7,35 +7,24 @@ local Players = game:GetService("Players");
 local LocalPlayer = Players.LocalPlayer;
 local PlayerGui = LocalPlayer.PlayerGui;
 
--- GetLevel
-local function GetLevel()
-    return tostring(Data.Fruits[GetFruit()].Level.Value)
-end
--- GetStamina
-local function GetStamina()
-    return (tonumber(GetLevel()) * 4) + 200
-end
--- Percent
-local function Percent(Part, Whole)
-    return (Part / Whole) * 100
-end
-
-local function Respawn()
-    require(ReplicatedStorage.Loader).ServerEvent('Core', 'LoadCharacter', {})
-    require(ReplicatedStorage.Loader).ServerEvent('Main', 'LoadCharacter')
-    if (LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()) and LocalPlayer.Character:WaitForChild('Humanoid',2) then
-        Workspace.CurrentCamera.CameraSubject =  LocalPlayer.Character.Humanoid
-        game:GetService('StarterGui'):SetCoreGuiEnabled('Backpack',false)
-        game:GetService('StarterGui'):SetCoreGuiEnabled('PlayerList',true)
-        game:GetService('StarterGui'):SetCoreGuiEnabled('Chat',true)
-        UI.MainMenu.Visible  =  false
-        UI.HUD.Visible       =  true
-    end
-end
-while true do
 local MainData = LocalPlayer:WaitForChild("MAIN_DATA")
 local CurrentData = MainData:WaitForChild("Fruits"):WaitForChild(MainData:WaitForChild("Slots")[MainData:WaitForChild("Slot").Value].Value);
 
+local FruitMoves = {};
+
+while shared.FruitBattlegrounds do
+	wait(0.25);
+
+	if PlayerGui:FindFirstChild("UI") and not PlayerGui.UI.HUD.Visible then return end;
+	if LocalPlayer.Character.Stats:GetAttribute("Stamina") <= 50 then return end;
+
+	if #FruitMoves == 0 then
+		for i,v in pairs(LocalPlayer.Backpack:GetChildren()) do
+			if v.ClassName == "Tool" and CurrentData.Level.Value >= v:GetAttribute("Level") then
+				FruitMoves[#FruitMoves + 1] = string.gsub(v.Name, " ", "");
+			end
+		end
+	else
 		LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1317.05322, 696.182251, -985.855286, -0.608514786, 4.99603416e-08, -0.793542504, -1.55696291e-08, 1, 7.48979332e-08, 0.793542504, 5.79316612e-08, -0.608514786);
 
 		for i,v in pairs(FruitMoves) do
@@ -43,20 +32,5 @@ local CurrentData = MainData:WaitForChild("Fruits"):WaitForChild(MainData:WaitFo
 				ReplicatedStorage.Replicator:InvokeServer(CurrentData.Name, v, {});
 			end
 		end
-
-		if Percent(LocalPlayer.Character:WaitForChild('Stats',2):GetAttribute("Stamina"),GetStamina()) <= getgenv().Stamina then
-                LocalPlayer.Character:BreakJoints()
-		wait(5)
-		Respawn()
-            	end
-		if PlayerGui:FindFirstChild('DeathScreen') then
-            UI.HUD.Visible       =  false
-            UI.Safezone.Visible  =  false
-        	end
-		if humanoid.Health <= 10 then
-			local args = {
-			[1] = {
-			[1] = "Respawn"
-		end
-end
+	end
 end;
