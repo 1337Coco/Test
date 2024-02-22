@@ -6,6 +6,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage");
 local Players = game:GetService("Players");
 local LocalPlayer = Players.LocalPlayer;
 local PlayerGui = LocalPlayer.PlayerGui;
+local part = workspace.Part
 
 local MainData = LocalPlayer:WaitForChild("MAIN_DATA")
 local CurrentData = MainData:WaitForChild("Fruits"):WaitForChild(MainData:WaitForChild("Slots")[MainData:WaitForChild("Slot").Value].Value);
@@ -13,6 +14,13 @@ local CurrentData = MainData:WaitForChild("Fruits"):WaitForChild(MainData:WaitFo
 local FruitMoves = {};
 
 while shared.FruitBattlegrounds do
+	local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	local humrp = char:WaitForChild("HumanoidRootPart")
+	local hum = char:WaitForChild("Humanoid")
+
+	humrp.CFrame = CFrame.lookAt(humrp.Position, Vector3.new(part.Position.X, humrp.Position.Y, part.Position.Z))
+	task.wait()
+end
 	wait(0.25);
 
 	if PlayerGui:FindFirstChild("UI") and not PlayerGui.UI.HUD.Visible then return end;
